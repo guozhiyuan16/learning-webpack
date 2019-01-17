@@ -34,7 +34,7 @@ module.exports = {
 
 - production
 ```angular2
-module.exports = {
+module.exports = {—
 +  mode: 'production',
 -  plugins: [
 -    new UglifyJsPlugin(/* ... */),
@@ -207,8 +207,15 @@ module:{
      } 
 ```
 
-### devServer
-- npx install webpack-dev-server --save-dev
+### devServer  ---> express
+
+- 默认打包是在内存中打包的
+contentBase:'dist' （不配置也能成功是应为运行了html-webpack-plugin）
+
+- 默认启动的服务是在根目录下
+
+- creatGzip
+compress:true
 
 #### proxy (依靠http-proxy-middleware(webpack内置))
 
@@ -245,15 +252,6 @@ devServer:{
 
 ### plugin
 
-#### webpack-dev-server  ---> express
-
-- 默认打包是在内存中打包的
-contentBase:'dist' （不配置也能成功是应为运行了html-webpack-plugin）
-
-- 默认启动的服务是在根目录下
-
-- creatGzip
-compress:true
 
 #### html-webpack-plugin
 
@@ -444,7 +442,23 @@ plugins:[
 ]
 ```
 
-#### webpack.DefinePlugin
+#### webpack.DefinePlugin ( 设置环境变量 )
+
+```angularjs
+let webpack = require('webpack');
+
+plugins:[
+    new webpack.DefinePlugin({
+                // 定义的变量 需要json.stringify 包裹
+                DEV:JSON.stringify('production'),   // or '"development"'
+                EXPRESSION:'1+1',
+                FLAG:'true'
+            })
+]
+
+```
+
+
 
 ### devtool 
 

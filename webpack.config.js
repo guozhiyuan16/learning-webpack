@@ -1,6 +1,7 @@
 let path = require('path');
-let HtmlWebpackPlugin = require('html-webpack-plugin');
 let webpack = require('webpack');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
     mode:'development',
     entry:'./src/index.js',
@@ -9,7 +10,7 @@ module.exports = {
         filename:'bundle.js'
     },
     devServer:{
-
+        contentBase:'./dist'
     },
     module :{
         rules:[
@@ -40,7 +41,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             // 定义的变量 需要json.stringify 包裹
-            DEV:JSON.stringify('development'),   // or '"development"'
+            DEV:JSON.stringify('production'),   // or '"development"'
             EXPRESSION:'1+1',
             FLAG:'true'
         })

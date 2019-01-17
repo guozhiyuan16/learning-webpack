@@ -43,6 +43,7 @@ if(DEV === 'development'){
 }
 
 console.log(url);
+console.log(DEV);
 console.log(EXPRESSION);
 console.log(FLAG);
 
