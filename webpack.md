@@ -207,6 +207,41 @@ module:{
      } 
 ```
 
+### devServer
+- npx install webpack-dev-server --save-dev
+
+#### proxy (依靠http-proxy-middleware(webpack内置))
+
+- 后台配置跨域头
+
+- 设置webpack-dev-server proxy
+
+```angular2
+devServer:{
+        // mock 自己的数据
+        before(app){ // 默认webpack-dev-server 启动的时候 会调用这样的before 钩子， app参数是express()执行的结果
+            app.get('/api/user',(req,res)=>{
+                res.json({name:'world!'})
+            })
+        },
+
+        proxy:{ // 只对开发的时候有效，上线代码一般会布置到一起,就不存在跨域了
+            //'/api':'http://localhost:3000',
+        
+            // 前端发 /api/user   后台实际接口 /user
+            '/api':{
+                  target:'http://127.0.0.1:3000',
+                  pathRewrite:{
+                            '/api':''
+                        }
+                  }
+             }
+
+    },
+```
+
+- 把webpack在后台启动 （一般不会用） 
+
 
 ### plugin
 
@@ -382,6 +417,69 @@ module :{
     }
 ```
 
+#### clean-webpack-plugin (清空目录，一般在开发环境使用，常配合出口hash) 
+
+- npm install clean-webpack-plugin --svae-dev
+
+```angular2
+let CleanWebpackPlugin = require('clean-webpack-plugin');
+
+plugins:[ 
+        new CleanWebpackPlugin(['./dist'])
+    ]
+```
+
+#### copy-webpack-plugin (拷贝静态资源插件)
+
+- npm install copy-webpack-plugin --save-dev
+
+```angular2
+let CopyWebpackPlugin = require('copy-webpack-plugin');
+
+plugins:[ 
+       new CopyWebpackPlugin([{
+            from:'./assets',
+            to:'./'   // 默认会拷贝到dist
+        }])
+]
+```
+
+#### webpack.DefinePlugin
+
+### devtool 
+
+#### socurc-map 
+```angular2
+
+module.exports = {
+      mode:'production'
+      ...
+      devtool: "source-map", //  告诉webpack 生成一个map(name.js.map) ，会表示源码中哪行那列报错了
+            // eval-source-map // 当前打包的js中
+            // cheap-module-source-map // 简化版，不在文件中
+            // cheap-module-eval-source-map  是一个在文件中的source-map,打包出来会很大，没有列的定位功能
+}    
+```
+
+>  带cheap-module没有列，带eval在文件中
+>  如果使用 mini-css-extract-plugin 优化配置优化js时也需要配置那里的sourceMap。当然默认情况就会产生source-map
+
+### watch ( 监听打包 )
+
+```angular2
+module.exports = {
+     mode:'production'
+     ...
+     watch: true,
+        watchOptions: { // 监控的选项
+            poll:1000, // 以秒为单位 轮询
+            aggregateTimeout:2000, // 防抖 只要不停地触发事件只执行最后一次   节流 每隔多少秒触发一次
+            ignored: /node_modules/
+        },
+
+}
+```
+
 
 ## others config
 
@@ -482,3 +580,4 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 ```
 
+- 调试es6代码 需要一个sourceMap 源码映射
