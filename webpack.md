@@ -1,4 +1,4 @@
-## webpack
+## webpack常用配置
 
 ### 初始化
 ```
@@ -10,7 +10,17 @@ npm init -y
 ```
 yarn add webpack webpack-cli -D
 ```
+
 ### entry
+```angular2
+ entry:'./src/index.js',   // 单入口
+ or
+ entry:{    、、 多入口
+    main:'./src/index.js'
+    ...
+ }
+ 
+```
 
 ### output
 ```
@@ -21,6 +31,7 @@ output:{
 ```
 
 ### mode
+
 - development 调试（不会压缩，不会调试）
 ```angular2
 module.exports = {
@@ -184,6 +195,7 @@ module:{ // 对模块来进行配置
                   options:{
                       limit:200*1024,
                       name:'images/[hash:8].[name].[ext]'   //  图片放到./dist/images 常和output.publicPath配合使用确保图片地址引用正确
+                      publicPath:"/url-loader-test/dist/"      //该地址不是唯一的，根据你的代码实际路由地址进行修改
                   }
               
        ]
@@ -249,9 +261,24 @@ devServer:{
 
 - 把webpack在后台启动 （一般不会用） 
 
+### resolve 第三方模块的解析规则
+
+[深入浅出webpack学习(5)--Resolve](https://segmentfault.com/a/1190000013176083?utm_source=tag-newest)
+
+```angular2
+resolve: { // 第三方模块的解析规则
+        modules: [path.resolve("node_modules")],
+        mainFiles: ['a.js','index.js'], // 入口文件的配置
+        mainFields: ['style','main'], // 入口字段的配置 webpack会按照数组里的顺序去package.json文件里面找，只会使用找到的第一个。
+        extensions:['.js', '.json'], //也就是说当遇到require('./data')这样的导入语句时，webpack会先去寻找./data.js文件，如果找不到则去找./data.json文件，如果还是找不到则会报错。
+        alias: {
+            'bootstrap':'bootstrap/dist/css/bootstrap.css'
+        }
+
+    },
+```
 
 ### plugin
-
 
 #### html-webpack-plugin
 
@@ -280,6 +307,17 @@ plugins:[
 DefinePlugin 允许创建一个在编译时可以配置的全局常量。这可能会对开发模式和发布模式的构建允许不同的行为非常有用。如果在开发构建中，而不在发布构建中执行日志记录，则可以使用全局常量来决定是否记录日志。这就是 DefinePlugin 的用处，设置它，就可以忘记开发和发布构建的规则。
 
 [DefinePlugin 用法](https://www.webpackjs.com/plugins/define-plugin/)
+
+```angular2
+plugins:[
+        new webpack.DefinePlugin({
+            // 定义的变量 需要json.stringify 包裹
+            DEV:JSON.stringify('production'),   // or '"development"'
+            EXPRESSION:'1+1',
+            FLAG:'true'
+        })
+    ]
+```
 
 #### NameModulesPlugin
 当开启 HMR 的时候使用该插件会显示模块的相对路径，建议用于开发环境。
@@ -458,7 +496,19 @@ plugins:[
 
 ```
 
+#### webpack-merge (区分环境变量，进行不同配置)
 
+- npm install webpack-merge --save-dev
+```angular2
+let base = require('./webpack.base'); // 导入公共配置，loader entry  output 等
+let merge = require('webpack-merge'); // 区分环境变量
+
+let prod = {
+    mode:'production'
+};
+
+module.exports = merge(base,prod);
+```
 
 ### devtool 
 

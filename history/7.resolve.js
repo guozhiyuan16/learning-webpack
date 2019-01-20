@@ -12,6 +12,15 @@ module.exports = {
     devServer:{
         contentBase:'./dist'
     },
+    resolve: { // 第三方模块的解析规则
+        modules: [path.resolve("node_modules")],
+        mainFiles: ['a.js','index.js'], // 入口文件的配置
+        mainFields: ['style','main'], // 入口字段的配置 webpack会按照数组里的顺序去package.json文件里面找，只会使用找到的第一个。
+        extensions:['.js', '.json', '.css'], //也就是说当遇到require('./data')这样的导入语句时，webpack会先去寻找./data.js文件，如果找不到则去找./data.json文件，如果还是找不到则会报错。
+        alias: { // 别名
+            'bootstrap':'bootstrap/dist/css/bootstrap.css'
+        }
+    },
     module :{
         rules:[
             {

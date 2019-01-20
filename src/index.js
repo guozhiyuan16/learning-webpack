@@ -1,7 +1,9 @@
 // import './reset.less';
 // import './index.less';
 
-console.log('index');
+// console.log('index');
+//
+// import 'bootstrap'
 
 // let ace = require('./ace.jpeg');
 // let img = new Image();
@@ -35,17 +37,17 @@ console.log('index');
 //
 // xhr.send();
 
-let url = "";
-if(DEV === 'development'){
-    url = '127.0.0.1'
-}else{
-    url = 'gzy'
-}
-
-console.log(url);
-console.log(DEV);
-console.log(EXPRESSION);
-console.log(FLAG);
+// let url = "";
+// if(DEV === 'development'){
+//     url = '127.0.0.1'
+// }else{
+//     url = 'gzy'
+// }
+//
+// console.log(url);
+// console.log(DEV);
+// console.log(EXPRESSION);
+// console.log(FLAG);
 
 
 // let str = require('./a');
@@ -70,3 +72,15 @@ console.log(FLAG);
 // };
 //
 // fn();
+
+
+import moment from 'moment';
+
+import 'moment/locale/zh-cn';
+
+moment.locale('zh-cn');
+
+let r =  moment(Date.now()-60*1000*60*2).fromNow();
+
+console.log(r);
+
