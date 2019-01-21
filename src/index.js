@@ -49,7 +49,6 @@
 // console.log(EXPRESSION);
 // console.log(FLAG);
 
-
 // let str = require('./a');
 // require('./index.css');
 // console.log(str);
@@ -74,13 +73,33 @@
 // fn();
 
 
-import moment from 'moment';
+// import moment from 'moment';
+//
+// import 'moment/locale/zh-cn';
+//
+// moment.locale('zh-cn');
+//
+// let r =  moment(Date.now()-60*1000*60*2).fromNow();
+//
+// console.log(r);
 
-import 'moment/locale/zh-cn';
 
-moment.locale('zh-cn');
+// //let calc = require('./calc');
+//
+// import calc from './calc';   // tree shaking   minus 就会被去掉
+//
+// console.log(calc.add() );
 
-let r =  moment(Date.now()-60*1000*60*2).fromNow();
 
-console.log(r);
+// let a = 1;
+// let b = 2;
+// let c = 3;
+//
+// let d = a+b+c;
+// console.log(d);   // ===>  console.log(6)     // scope hosting
 
+
+import './a';
+import './b';
+import 'jquery';
+console.log('index')

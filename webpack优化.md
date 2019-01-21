@@ -1,6 +1,6 @@
 ## webpack中的优化
 
-### 内置了一些优化 scope hosting(作用域提升)  、 tree shaking  (去除无用代码)
+### 内置了一些优化 scope hosting(作用域提升) **导入，要使用import 语法**  、 tree shaking  (去除无用代码) **默认支持es6语法**，require他不会去分析依赖
 
 ### 配置 可以解决打包问题 需要自己配置
 
@@ -17,7 +17,11 @@
            ]
        },
 ```
-
+   
+   
+   
+   
+   
 ### 第三方插件
 
 #### webpack.IgnorePlugin(内置)
@@ -87,3 +91,7 @@ module.exports = {
 }
 
 ```
+
+
+
+

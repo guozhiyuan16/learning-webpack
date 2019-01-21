@@ -645,3 +645,27 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 ```
 
 - 调试es6代码 需要一个sourceMap 源码映射
+
+- 多页面应用抽离公共代码以及第三方模块
+```angular2
+optimization: {
+        splitChunks: { // 分离代码块
+            cacheGroups: { // 缓存组
+                common:{ // common~index~login
+                    name:'xxx',
+                    chunks: "initial",  // 从入口处抽离
+                    minSize:0 ,   // 只要共用的部分超过0个字节 我就抽离
+                    minChunks: 2, // 至少两次才抽离出来
+                },
+                vendor:{
+                    priority:1,   // 权重，先走这里，默认为0
+                    test:/node_modules/,  // 标识第三方模块，node_modules下的
+                    chunks: "initial",
+                    minSize:0,
+                    minChunks:2
+                }
+            }
+        }
+    },
+
+```
