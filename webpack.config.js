@@ -1,36 +1,15 @@
 let path = require('path');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
+let webpack = require('webpack');
 module.exports = {
     mode:'development',
-    optimization: {
-        splitChunks: { // 分离代码块
-            cacheGroups: { // 缓存组
-                common:{ // common~index~login
-                    name:'xxx',
-                    chunks: "initial",  // 从入口处抽离
-                    minSize:0 ,   // 只要共用的部分超过0个字节 我就抽离
-                    minChunks: 2, // 至少两次才抽离出来
-                },
-                vendor:{
-                    priority:1,   // 权重，先走这里，默认为0
-                    test:/node_modules/,  // 标识第三方模块，node_modules下的
-                    chunks: "initial",
-                    minSize:0,
-                    minChunks:2
-                }
-            }
-        }
-    },
-    entry:{
-        index:'./src/index.js',
-        login:'./src/login.js'
-    },
+    entry:'./src/index.js',
     output:{
         path:path.resolve(__dirname,'dist'),
-        filename:'[name].js'
+        filename:'bundle.[hash:8].js'
     },
     devServer:{
-        port:8080
+        contentBase:'./dist'
     },
     module :{
         rules:[
@@ -39,17 +18,12 @@ module.exports = {
                 use:['style-loader','css-loader']
             },
             {
-                test:/\.less$/,
-                use:['style-loader','css-loader','less-loader']
-            },
-            {
                 test:/\.js$/,
                 exclude:/node_modules/,
                 use:{
                     loader:'babel-loader',
                     options:{
-                        "presets":["@babel/preset-env","@babel/preset-react"],
-                        "plugins":["@babel/plugin-proposal-class-properties"]
+                        "presets":["@babel/preset-env","@babel/preset-react"]
                     }
                 }
             }
@@ -58,13 +32,10 @@ module.exports = {
     plugins:[
         new HtmlWebpackPlugin({
             template:'./public/index.html',
-            filename: 'index.html',
-            chunks: ['index']
+            filename: 'index.html'
         }),
-        new HtmlWebpackPlugin({
-            template:'./public/index.html',
-            filename: 'login.html',
-            chunks: ['login']
+        new webpack.DllReferencePlugin({  //  dll 引用插件
+            manifest: path.resolve(__dirname,'dist','manifest.json')  // 内部引用了react,react-dom 会先在manifest.json中寻找，找不到才会打包，找到的话通过此文件找全局下的react_dll这个变量，通过manifest.json中的id 拿到对应的值
         })
     ]
 }

@@ -98,8 +98,19 @@
 // let d = a+b+c;
 // console.log(d);   // ===>  console.log(6)     // scope hosting
 
+//9.0
 
-import './a';
-import './b';
-import 'jquery';
-console.log('index')
+// import './a';
+// import './b';
+// import 'jquery';
+// console.log('index')
+
+import React from 'react';   // 每次修改代码这些都会重新打包，降低性能
+import ReactDOM from 'react-dom';
+
+
+ReactDOM.render('1',window.root);
+
+// dll 动态链接库
+// react + reactDOM 先给你打包好 放好
+// 引用的时候 引用我们打包好的结果即可

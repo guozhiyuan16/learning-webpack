@@ -19,9 +19,6 @@
 ```
    
    
-   
-   
-   
 ### 第三方插件
 
 #### webpack.IgnorePlugin(内置)
@@ -92,6 +89,57 @@ module.exports = {
 
 ```
 
+#### DllPlugin
+[DLLPlugin 和 DLLReferencePlugin 用某种方法实现了拆分 bundles，同时还大大提升了构建的速度。](https://webpack.docschina.org/plugins/dll-plugin/)
+
+```angular2
+
+webpack.dll.js
+
+let path = require('path');
+let webpack = require('webpack');
+module.exports = {
+    mode:'development',
+    entry:{
+        react:['react','react-dom']     // 只要是第三方的都可以
+    },
+    output: {
+        library:'[name]_dll',  // var xxx = 结果    拿到module.exports 的返回值,原来在闭包中拿不到
+        filename: "_dll_[name].js",    // 输出的文件的名字随便起即可
+        path: path.resolve(__dirname,'dist')
+    },
+    plugins: [
+        new webpack.DllPlugin({
+            name:'[name]_dll',  // name 是dll暴露的对象名，要跟 output.library 保持一致；
+            path: path.resolve(__dirname,'dist','manifest.json')    // manifest.json 列出了打包模块中所有的东西
+        })
+    ]
+};
+
+npx webpack --config webpack.dll.js  --> 生成 react_dll动态链接库 ， 以及 manidest.json
+
+```
 
 
+```angular2
+
+webpack.config.js
+
+plugins:[
+plugins:[
+        new webpack.DllReferencePlugin({  //  dll 引用插件
+            manifest: path.resolve(__dirname,'dist','manifest.json')  // 内部引用了react,react-dom 会先在manifest.json中寻找，找不到才会打包，找到的话通过此文件找全局下的react_dll这个变量，通过manifest.json中的id 拿到对应的值
+        })
+    ]
+
+
+```
+
+
+
+
+## question
+- 动态链接库在生产环境可以使用？和第三方的模块打包有什么区别，动态链接库解决的是webpack打包时间和大小的问题？ 
+
+dll是第三方模块打包的升级版，不仅能用在开发，同样可以用到生产。第三方模块单独打包，开发环境下你每次打包的体积并不会变化，并不能节约打包时间，而dll通过manifest,json查找（只会打包业务代码）可大量优化打包时间
 
