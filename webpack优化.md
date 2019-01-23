@@ -120,12 +120,10 @@ npx webpack --config webpack.dll.js  --> 生成 react_dll动态链接库 ， 以
 
 ```
 
-
 ```angular2
 
 webpack.config.js
-
-plugins:[
+ 
 plugins:[
         new webpack.DllReferencePlugin({  //  dll 引用插件
             manifest: path.resolve(__dirname,'dist','manifest.json')  // 内部引用了react,react-dom 会先在manifest.json中寻找，找不到才会打包，找到的话通过此文件找全局下的react_dll这个变量，通过manifest.json中的id 拿到对应的值
@@ -134,7 +132,6 @@ plugins:[
 
 
 ```
-
 
 
 
