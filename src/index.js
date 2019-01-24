@@ -105,12 +105,28 @@
 // import 'jquery';
 // console.log('index')
 
-import React from 'react';   // 每次修改代码这些都会重新打包，降低性能
-import ReactDOM from 'react-dom';
-
-
-ReactDOM.render('1',window.root);
+// import React from 'react';   // 每次修改代码这些都会重新打包，降低性能
+// import ReactDOM from 'react-dom';
+//
+//
+// ReactDOM.render('1',window.root);
 
 // dll 动态链接库
 // react + reactDOM 先给你打包好 放好
 // 引用的时候 引用我们打包好的结果即可
+
+
+
+let btn = document.createElement('button');
+
+btn.innerHTML = '点击';
+document.body.appendChild(btn);
+// vue lazyload react
+btn.addEventListener('click',function () {
+    // 需要babel插件来解析这个语法,返回的是一个promise
+    // jsonp
+     import('./test.js').then(data=>{
+            console.log(data.default)
+         })
+});
+
