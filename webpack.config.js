@@ -9,7 +9,8 @@ module.exports = {
         filename:'index.js'
     },
     devServer:{
-        contentBase:'./dist'
+        contentBase:'./dist',
+        hot:true  // 表示启动热更新
     },
     module :{
         rules:[
@@ -31,6 +32,10 @@ module.exports = {
         ]
     },
     plugins:[
+        // 使用热替换插件
+        new webpack.HotModuleReplacementPlugin(),
+        // 每次更新的时候 通知是哪个文件更新了
+        new webpack.NamedChunksPlugin(),
         new HtmlWebpackPlugin({
             template:'./public/index.html',
             filename: 'index.html'

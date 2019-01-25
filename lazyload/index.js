@@ -32,7 +32,7 @@
     // The module cache  // 模块的缓存
     var installedModules = {};
 
-    // object to store loaded and loading chunks  // 创建一个对象存储加我完成和正在加载的的对象
+    // object to store loaded and loading chunks  // 创建一个对象存储加载完成和正在加载的的对象
     // undefined = chunk not loaded, null = chunk preloaded/prefetched
     // Promise = chunk loading, 0 = chunk loaded
 
@@ -113,7 +113,7 @@
                     script.setAttribute("nonce", __webpack_require__.nc);
                 }
 
-                script.src = jsonpScriptSrc(chunkId);  // 加载0.js
+                script.src = jsonpScriptSrc(chunkId);  // 加载0.index.js
 
                 // 在执行成功前 会先执行0.index.js
                 onScriptComplete = function (event) {

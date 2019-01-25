@@ -167,6 +167,8 @@ module:{
 
 import '@babel/polyfill'  // 写了一整套的api 实例身上也可以调用 eg 'aaa'.include('a)
 
+- npm install "@babel/plugin-syntax-dynamic-import"  --save-dev   (webpack lazyloader)
+
 #### loader 解析 img
 
 - js中的引入
@@ -228,6 +230,29 @@ contentBase:'dist' （不配置也能成功是应为运行了html-webpack-plugin
 
 - creatGzip
 compress:true
+
+- 热更新
+hot:true
+
+```angular2
+
+module.exports ={
+   ...
+   devServer:{
+           hot:true  // 表示启动热更新
+       },
+
+   plugins:[
+           // 使用热替换插件
+           new webpack.HotModuleReplacementPlugin(),
+           // 每次更新的时候 通知是哪个文件更新了
+           new webpack.NamedChunksPlugin(),
+           ]
+   ...
+}
+
+```
+
 
 #### proxy (依靠http-proxy-middleware(webpack内置))
 
@@ -674,4 +699,4 @@ optimization: {
 
 
 ## quetion
-- 动态链接库在生产环境可以使用？和第三方的模块打包有什么区别，动态链接库解决的是webpack打包时间和大小的问题？ 
+    
