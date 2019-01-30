@@ -8,7 +8,7 @@ export default class Home extends Component {
     render() {
         return (
             <div>
-                Home111111
+                Home11111122223
             </div>
         )
     }

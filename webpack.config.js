@@ -10,6 +10,7 @@ module.exports = {
     },
     devServer:{
         contentBase:'./dist',
+        host:'127.0.0.1',
         hot:true  // 表示启动热更新
     },
     module :{

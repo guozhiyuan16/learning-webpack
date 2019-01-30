@@ -132,53 +132,53 @@
 
 // react 懒加载
 
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import {HashRouter as Router, Switch, Route} from 'react-router-dom';
-//
-// // import User from './User';
-// // import Home from './Home';
-//
-// class LazyLoad extends React.Component {
-//     constructor() {
-//         super();
-//         this.state = {
-//             com: null
-//         }
-//     }
-//
-//     componentDidMount() {
-//         this.props.load().then(data => {  // 这个组件加载完成后更新状态
-//             this.setState({
-//                 com: data.default
-//             })
-//         })
-//     }
-//
-//     render() {
-//         let Com = this.state.com;
-//         return Com ? <Com {...this.props}></Com> : <div>加载中</div>
-//
-//     }
-// }
-//
-// // 刚开始应该渲染个空组件，当拿到东西后再把原组件替换
-// let Home = (props) => <LazyLoad {...props} load={() => import('./Home')}/>
-// let User = (props) => <LazyLoad {...props} load={() => import('./User')}/>
-//
-// ReactDOM.render(
-//         <Router>
-//             <Switch>
-//                 <Route path="/home" component={Home}></Route>
-//                 <Route path="/user" component={User}></Route>
-//             </Switch>
-//         </Router>
-//         ,window.root);
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {HashRouter as Router, Switch, Route} from 'react-router-dom';
+
+// import User from './User';
+// import Home from './Home';
+
+class LazyLoad extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            com: null
+        }
+    }
+
+    componentDidMount() {
+        this.props.load().then(data => {  // 这个组件加载完成后更新状态
+            this.setState({
+                com: data.default
+            })
+        })
+    }
+
+    render() {
+        let Com = this.state.com;
+        return Com ? <Com {...this.props}></Com> : <div>加载中</div>
+
+    }
+}
+
+// 刚开始应该渲染个空组件，当拿到东西后再把原组件替换
+let Home = (props) => <LazyLoad {...props} load={() => import('./Home')}/>
+let User = (props) => <LazyLoad {...props} load={() => import('./User')}/>
+
+ReactDOM.render(
+        <Router>
+            <Switch>
+                <Route path="/home" component={Home}></Route>
+                <Route path="/user" component={User}></Route>
+            </Switch>
+        </Router>
+        ,window.root);
 
 
 
 
-// // 热更新
+// // 热更新模拟 实际是用websockt
 //
 // import React from 'react';
 // import ReactDOM from 'react-dom';
