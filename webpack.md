@@ -2,7 +2,7 @@
 
 ### 初始化
 ```
-npm init -y
+yarn init -y
 ```
 
 ### 安装 (本地安装，不要安装到全局，有可能版本有差别)
@@ -12,7 +12,7 @@ yarn add webpack webpack-cli -D
 ```
 
 ### entry
-```angular2
+```
  entry:'./src/index.js',   // 单入口
  or
  entry:{    、、 多入口
@@ -33,7 +33,7 @@ output:{
 ### mode
 
 - development 调试（不会压缩，不会调试）
-```angular2
+```
 module.exports = {
 + mode: 'development'
 - plugins: [
@@ -44,7 +44,7 @@ module.exports = {
 ```
 
 - production
-```angular2
+```
 module.exports = {—
 +  mode: 'production',
 -  plugins: [
@@ -63,7 +63,7 @@ module.exports = {—
 
 - loader写法:'',[],{}
 
-```angular2html
+```html
 
 module:{
     rules:[
@@ -100,9 +100,9 @@ module:{
 preLoader(前置) normalLoader(正常) inline(在代码中使用loader  ) postLoader(后置)
 
 #### loader 解析css
-- npm install css-loader style-loader --save-dev
+- yarn add css-loader style-loader -D
 
-```angular2
+```
  module :{
         rules:[
             {
@@ -114,9 +114,9 @@ preLoader(前置) normalLoader(正常) inline(在代码中使用loader  ) postLo
 ```
 
 #### loader 解析less
-- npm install less less-loader --save-dev
+- yarn add less less-loader -D
 
-```angular2
+```
 module :{
         rules:[
             {
@@ -129,9 +129,9 @@ module :{
 
 #### loader 解析js
 
-- npm install babel-loader @babel/core @babel/preset-env
+- yarn add babel-loader @babel/core @babel/preset-env
 
-```angular2html
+```html
 module:{
       rules :[  
           {
@@ -153,27 +153,27 @@ module:{
     },
 ```
 
-- npm install @babel/plugin-proposal-decorators     // 转化装饰器
+- yarn add @babel/plugin-proposal-decorators     // 转化装饰器
 
-- npm install @babel/plugin-proposal-class-properties  // 转化类属性
+- yarn add @babel/plugin-proposal-class-properties  // 转化类属性
 
-- npm install @babel/plugin-transform-runtime --save-dev  // 转化js运行时的api 方法并且可以优化js抽离公共部分(promise,yeld...)
+- yarn add @babel/plugin-transform-runtime  // 转化js运行时的api 方法并且可以优化js抽离公共部分(promise,yeld...)
 
 依赖
 
-- npm install @babel/runtime --save  (注意不能加dev,生产依赖,不用在plugins中配置)
+- yarn add @babel/runtime --save  (注意不能加dev,生产依赖,不用在plugins中配置)
 
-- npm install @babel/polyfill   
+- yarn add @babel/polyfill   
 
 import '@babel/polyfill'  // 写了一整套的api 实例身上也可以调用 eg 'aaa'.include('a)
 
-- npm install "@babel/plugin-syntax-dynamic-import"  --save-dev   (webpack lazyloader)
+- yarn add "@babel/plugin-syntax-dynamic-import"  --save-dev   (webpack lazyloader)
 
 #### loader 解析 img
 
 - js中的引入
 
-```angularjs
+```
 let img = new Image();
 img.src = './logo.png'; // 不能放字符串，不会被打包  
 
@@ -187,7 +187,7 @@ img.src = logo;
 
 - css背景图(css-loader 会把他变成require的形式 eg: background:url(require('./logo.png')))
 
-```angular2
+```
 module:{ // 对模块来进行配置
       rules :[ // 匹配的规则
           {
@@ -208,14 +208,14 @@ module:{ // 对模块来进行配置
 
 - <img src="" >   (打包后文件夹结构可能会变化，就会找不到)
 
-html-withImg-loader (打包后也会变成base64)
+html-withimg-loader (打包后也会变成base64)
 
-```angular2html
+```html
 module:{
     rules :[ 
                 {
                     test:/\.html$/,
-                    use:'html-withImg-loader'
+                    use:'html-withimg-loader'
                 }
            ]
      } 
@@ -232,9 +232,8 @@ contentBase:'dist' （不配置也能成功是应为运行了html-webpack-plugin
 compress:true
 
 - 热更新
-hot:true
 
-```angular2
+```
 
 module.exports ={
    ...
@@ -245,14 +244,10 @@ module.exports ={
    plugins:[
            // 使用热替换插件
            new webpack.HotModuleReplacementPlugin(),
-           // 每次更新的时候 通知是哪个文件更新了
-           new webpack.NamedChunksPlugin(),
-           ]
    ...
 }
 
 ```
-
 
 #### proxy (依靠http-proxy-middleware(webpack内置))
 
@@ -260,7 +255,7 @@ module.exports ={
 
 - 设置webpack-dev-server proxy
 
-```angular2
+```
 devServer:{
         // mock 自己的数据
         before(app){ // 默认webpack-dev-server 启动的时候 会调用这样的before 钩子， app参数是express()执行的结果
@@ -290,7 +285,7 @@ devServer:{
 
 [深入浅出webpack学习(5)--Resolve](https://segmentfault.com/a/1190000013176083?utm_source=tag-newest)
 
-```angular2
+```
 resolve: { // 第三方模块的解析规则
         modules: [path.resolve("node_modules")],
         mainFiles: ['a.js','index.js'], // 入口文件的配置
@@ -311,7 +306,7 @@ resolve: { // 第三方模块的解析规则
 
 > 简化HTML文件的创建，为您的webpack捆绑服务提供服务。这对于webpack包含文件名中包含哈希值的bundle 来说尤其有用，它会更改每个编译。您可以让插件为您生成HTML文件(打包html并且把打包后的文件引入)
 
-```angular2html
+```
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 plugins:[
@@ -333,7 +328,7 @@ DefinePlugin 允许创建一个在编译时可以配置的全局常量。这可�
 
 [DefinePlugin 用法](https://www.webpackjs.com/plugins/define-plugin/)
 
-```angular2
+```
 plugins:[
         new webpack.DefinePlugin({
             // 定义的变量 需要json.stringify 包裹
@@ -349,15 +344,15 @@ plugins:[
 
 #### mini-css-extract-plugin （抽离css样式 变成link href 的形式）
 
-- npm install mini-css-extract-plugin optimize-css-assets-webpack-plugin uglifyjs-webpack-plugin --save-dev
+- yarn add mini-css-extract-plugin optimize-css-assets-webpack-plugin uglifyjs-webpack-plugin -D
 
 [mini-css-extract-plugin API](https://www.npmjs.com/package/mini-css-extract-plugin)
 
 经过style-loader处理后会把样式以style标签的形式嵌入html ,如果css样式多的时候不适用，这个模块**内置style-loader**。
 
-> 用这个plugin当环境变为生产环境需要手动压缩
+> ps:用这个plugin当环境变为生产环境需要手动压缩
 
-```angular2html
+```
 let MiniCssExtractPlugin = require('mini-css-extract-plugin'); 
 
 let OptimizeCss = require('optimize-css-assets-webpack-plugin');
@@ -404,13 +399,13 @@ module.exports = {
 
 #### optimize-css-assets-webpack-plugin (生产环境压缩 css)
 
-- npm install optimize-css-assets-webpack-plugin --save-dev
+- yarn add optimize-css-assets-webpack-plugin -D
 
 > 用法在上面
 
 #### uglifyjs-webpack-plugin (压缩js)
 
-- npm install UglifyJSPlugin --save-dev
+- yarn add UglifyJSPlugin -D
 
 当调用optimization后，会覆盖掉原来的配置，导致只有css进行了压缩,js没有压缩，所以需要手动调用
 
@@ -420,7 +415,7 @@ module.exports = {
 
 [postcss-loader API](https://www.npmjs.com/package/postcss-loader)
 
-```angular2html
+```
 webpack.config.js
 
 module.exports = {
@@ -464,9 +459,9 @@ module.exports = {
 ```
 
 #### ESLint
-- npm install eslint eslint-loader --save-dev
+- yarn add eslint eslint-loader -D
 
-```angularjs
+```
 module :{
         rules:[
             {
@@ -480,21 +475,21 @@ module :{
 
 #### clean-webpack-plugin (清空目录，一般在开发环境使用，常配合出口hash) 
 
-- npm install clean-webpack-plugin --svae-dev
+- yarn add clean-webpack-plugin -D
 
-```angular2
+```
 let CleanWebpackPlugin = require('clean-webpack-plugin');
 
 plugins:[ 
-        new CleanWebpackPlugin(['./dist'])
+        new CleanWebpackPlugin() // 不需要传参，默认就会去找output.path
     ]
 ```
 
 #### copy-webpack-plugin (拷贝静态资源插件)
 
-- npm install copy-webpack-plugin --save-dev
+- yarn add copy-webpack-plugin -D
 
-```angular2
+```
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 plugins:[ 
@@ -507,7 +502,7 @@ plugins:[
 
 #### webpack.DefinePlugin ( 设置环境变量 )
 
-```angularjs
+```
 let webpack = require('webpack');
 
 plugins:[
@@ -523,8 +518,8 @@ plugins:[
 
 #### webpack-merge (区分环境变量，进行不同配置)
 
-- npm install webpack-merge --save-dev
-```angular2
+- yarn add webpack-merge -D
+```
 let base = require('./webpack.base'); // 导入公共配置，loader entry  output 等
 let merge = require('webpack-merge'); // 区分环境变量
 
@@ -538,15 +533,15 @@ module.exports = merge(base,prod);
 ### devtool 
 
 #### socurc-map 
-```angular2
+```
 
 module.exports = {
       mode:'production'
       ...
-      devtool: "source-map", //  告诉webpack 生成一个map(name.js.map) ，会表示源码中哪行那列报错了
-            // eval-source-map // 当前打包的js中
-            // cheap-module-source-map // 简化版，不在文件中
-            // cheap-module-eval-source-map  是一个在文件中的source-map,打包出来会很大，没有列的定位功能
+      devtool:  source-map', // 会单独生成一个sourcemap文件 ，出错会标识当前报错的列和行  大而全
+                // eval-source-map // 不会产生单独的文件，但是可以显示行和列
+                // cheap-module-source-map // 不会产生列。但是是一个单独的映射文件
+                // cheap-module-eval-source-map  // 不会产生文件，集成在打包后的文件中，不会产生列
 }    
 ```
 
@@ -555,7 +550,7 @@ module.exports = {
 
 ### watch ( 监听打包 )
 
-```angular2
+```
 module.exports = {
      mode:'production'
      ...
@@ -585,7 +580,7 @@ module.exports = {
 
 import $ from 'jquery'; --->每个文件打包后就会成为(function(arg){eval(...)})(); 这种window.$为undefined
 
-```angular2html
+```
 
 // 1.通过expose-loader 暴露的loader
 
@@ -605,7 +600,7 @@ import  'jquery'
 
 ```    
  
-```angular2html
+```
 // 2. 用webpack插件每个模块都提供一个$
 
 plugins:[
@@ -615,7 +610,7 @@ plugins:[
 ]
 ```    
 
-```angular2html
+```
 // 3. 在html引用
 module.exports = {
     ...
@@ -639,7 +634,7 @@ module.exports = {
 ```
     
 - 多入口配置
-```angular2
+```
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 
  entry:{ // 入口文件数量
@@ -672,7 +667,7 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 - 调试es6代码 需要一个sourceMap 源码映射
 
 - 多页面应用抽离公共代码以及第三方模块
-```angular2
+```
 optimization: {
         splitChunks: { // 分离代码块
             cacheGroups: { // 缓存组
@@ -698,5 +693,61 @@ optimization: {
 
 
 
-## quetion
+## 配置中出现的问题
+
+1. [Uncaught TypeError: Cannot assign to read only property 'exports' of object '#<Object>'.](https://stackoverflow.com/questions/42449999/webpack-import-module-exports-in-the-same-module-caused-error)
+
+
+```
+原因：
+This happens if other modules down stream have an unexpected require tree. Babel changes require to import where it isn't supposed to which causes the aforementioned issue @Matthew Herbst. To solve this add "sourceType": "unambiguous" to your babelrc file or babel.config.js so that @babel/plugin-transform-runtime won't do this change of require expression to import in your commonjs files.
+
+> babel.config.js
+
+module.exports = {
+  presets: [
+    '@quasar/babel-preset-app'
+  ],
+
+  "sourceType": "unambiguous"
+}
+```
+
+2. TypeError: this.getOptions is not a function
+一般都是插件为了适配webpack5 做了升级，降低插件版本即可
+
+3. [图片打包到公共img文件夹下，页面取不到图片问题（图片查找路径被添加了css/img/xxx）](https://segmentfault.com/q/1010000014640043)
+
+```
+loader: MiniCssExtractPlugin.loader,
+options: {
+  /*
+  * 复写css文件中资源路径
+  * webpack3.x配置在extract-text-webpack-plugin插件中
+  * 因为css文件中的外链是相对与css的，
+  * 我们抽离的css文件在可能会单独放在css文件夹内
+  * 引用其他如img/a.png会寻址错误
+  * 这种情况下所以单独需要配置../../，复写其中资源的路径
+  */
+  publicPath: '../../' 
+}
+```
+
+4. 使用html-withimg-loader 引用图片地址变为  <img src={"default":"389a66a25c539a9fd3524d58c43e2560.png"}>
+
+```
+{
+    test:/\.(png|jpg|gif)$/,
+    loader:'url-loader',
+    options:{
+        esModule:false
+    }
+},
+```
+
+5. webpack4 使用最新 copy-webpack-plugin 打包报错 “compilation.getCache is not a function“
+yarn add copy-webpack-plugin@6 -D  // 降低版本  npm
+
+6. 通过默认的devServer配置启动的服务，打包的动态链接库找不到，需要配置contentBase
+
     
