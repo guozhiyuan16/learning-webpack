@@ -4,7 +4,7 @@
 
 ### 懒加载执行步骤
 
-```angular2
+```
 // index.js
 
 let btn = document.createElement('button');
@@ -25,7 +25,7 @@ btn.addEventListener('click',function () {
 
 - 创建installedChunks来存储加载模块的信息
 
-```angular2
+```
  // undefined 标识模块没有加载
  // null 模块预加载
  // promise 模块加载中（加载中）
@@ -37,7 +37,7 @@ btn.addEventListener('click',function () {
 
 - 重写数组的push 方法 为 webpackJsonpCallback
 
-```angular2
+```
 
     // jsonpArray = []
     var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
@@ -51,7 +51,7 @@ btn.addEventListener('click',function () {
 
 - 加载经过babel编译的index.js,调用__webpack_require__.e
 
-```angular2
+```
 // 格式化后的index.js
 
 btn.addEventListener('click', function () {
@@ -70,7 +70,7 @@ btn.addEventListener('click', function () {
 
 - __webpack_require__.e 中 创建并且返回promise，修改installedChunks对象
 
-```angular2
+```
   var promises = [];
   
  var promise = new Promise(function (resolve, reject) {
@@ -88,7 +88,7 @@ btn.addEventListener('click', function () {
 
 -  __webpack_require__.e 中 创建script 标签，绑定 onScriptComplete 事件，加载0.js
 
-```angular2
+```
 
   // script path function
       function jsonpScriptSrc(chunkId) {
@@ -128,7 +128,7 @@ btn.addEventListener('click', function () {
 
 - 加载0.js时，会调用重写的push方法(webpackJsonpCallback),把后加载的结构合并到modules
 
-```angular2
+```
 
     function webpackJsonpCallback(data) {
         var chunkIds = data[0];   // [0]
@@ -170,7 +170,7 @@ btn.addEventListener('click', function () {
 
 - User.js、Home.js
 
-```angular2
+```
 import React,{Component} from 'react';
 import ReactDom from 'react-dom';
 
@@ -189,7 +189,7 @@ export default class User extends Component {
 ```
 
 - index.js
-```angular2
+```
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {HashRouter as Router, Switch, Route} from 'react-router-dom';
@@ -237,7 +237,7 @@ ReactDOM.render(
 
 ### 热更新模拟
 每次有代码更改会提交给浏览器 浏览器会用最新的模块替换掉原有的模块，出发最终的回调函数
-```angular2
+```
 // 热更新
 
 import React from 'react';

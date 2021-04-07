@@ -1,6 +1,7 @@
 ## webpack中的优化
 
 ### webpack 自带优化
+
 - tree-shaking  **import语法**在**生产**环境下，没用到的代码会自动删除掉
     - es6 模块会把结果放到default上
 
@@ -30,6 +31,7 @@ console.log(d,'--------')  // 这个直接是console.log(6)
 ```
 
 #### exclude && include
+
 ```
 {
     test:/\.js$/,
@@ -46,6 +48,7 @@ console.log(d,'--------')  // 这个直接是console.log(6)
 ```
 
 #### webpack.IgnorePlugin(内置)
+
 ```
 let webpack = require('webpack');
 plugins:[
@@ -67,6 +70,7 @@ console.log(r);
 ```
 
 #### happyPack (多线程打包) 
+
 > 大点的项目才能体现出效果，小项目时间会延长，因为开线程也需要时间
 
 - yarn add happypack -D
@@ -113,6 +117,7 @@ module.exports = {
 ```
 
 #### DllPlugin
+
 [DLLPlugin 和 DLLReferencePlugin 用某种方法实现了拆分 bundles，同时还大大提升了构建的速度。](https://webpack.docschina.org/plugins/dll-plugin/)
 
 ```
